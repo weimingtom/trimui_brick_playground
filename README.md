@@ -176,3 +176,79 @@ Select the device event number [0-4]:
 
 need back usb-c otg connect a mouse
 ```
+
+## Cross compiling godot 3.5.1   
+* godot.frt.opt.arm64v8
+* include_trimui.tar.gz
+* pong_v1_3.5.1.tar.gz
+* frt-2.1.0.zip
+* godot-3.5.1-stable.tar.xz
+```
+1.
+Mod /platform/frt/SCsub:
+
+frt_env = env.Clone()
+#frt_env.ParseConfig(env['FRT_PKG_CONFIG'] + ' sdl2 --cflags --libs')
+#frt_env.ParseConfig('./sdl2-config --cflags --libs')
+frt_env.Append(CCFLAGS=['-I/home/wmt/work_trimui/usr/include'])
+frt_env.Append(CCFLAGS=['-I/home/wmt/work_trimui/usr/include/SDL2'])
+frt_env.Append(CCFLAGS=['-D_REENTRANT'])
+frt_env.Append(LDFLAGS=['-L/home/wmt/work_trimui/usr/lib'])
+
+2.
+(clean /home/wmt/work_trimui/usr/include)
+see include_trimui.tar.gz
+
+3.
+need mod /home/wmt/work_godot/godot-3.5.1-stable/thirdparty/libvpx/vp8/common/generic/systemdependent.c:102
+to 0
+#if ARCH_ARM
+    ctx->cpu_caps = 0;//arm_cpu_caps();
+
+	
+4.
+PATH=/home/wmt/work_trimui/aarch64-linux-gnu-7.5.0-linaro/bin:$PATH scons platform=frt frt_arch=arm64v8 frt_cross=auto tools=no target=release verbose=yes CCFLAGS='-I/home/wmt/work_trimui/usr/include -I/home/wmt/work_trimui/usr/include/SDL2' LINKFLAGS='-lSDL2 -L/home/wmt/work_trimui/usr/lib' -j8
+```
+```
+今天我可以成功交叉编译arm6版的godot 3.5.1无tools版，可以在trimui smart pro上运行。
+编译方法大概是这样（虽然有一个链接问题未完全解决）：
+（1）去掉platform/frt/SCsub中关于FRT_PKG_CONFIG的调用，换成frt_env.Append
+（2）确保交叉工具链的/usr/include文件夹只包含很少文件，
+避免和godot内的库版本不同而编译失败
+（3）libvpx有一处获取CPU特性的代码，我改成返回0
+（4）用scons交叉编译，通过frt_arch和CCFLAGS和LINKFLAGS指定交叉编译参数，
+用PATH环境变量导入gcc程序目录
+
+关于godot mono，上次说的动态AddChild和Instantiate，我没有详细研究，
+其实我目前看到有两种动态Instantiate实例化的写法，都是基于
+PackedScene.Instantiate（可以强制转换返回值，或者使用泛型类型参数）。
+这两种写法区别在于，一种是需要(PackedScene)ResourceLoader.Load("res://tscn路径")
+获取PackedScene对象，然后再实例化（感觉像是写ActionScript3），
+还有一种是在C井中用Export标注来导出属性，然后在godot编辑器-检查器-修改这个属性指定场景，
+从而获取PackedScene对象，然后再PackedScene.Instantiate实例化。
+相对而言第一种写法可以没那么依靠godot编辑器，更依靠于字符串，
+而不需要手工绑定到tscn场景文件
+```
+
+## Cross compiling PPSSPP 1.5.4  
+* imouto.iso  
+* ppsspp_v1.5.4_min.tar.gz  
+```
+ppsspp闪退好像是因为一个函数sceMpegAvcDecode出问题，不过可能升级到最新版就会没事，
+问题是我不会编译这个，等以后有时间再研究  
+
+我试过可以很容易在xubuntu 20下编译PC版linux版的PPSSPP，前提是要
+git submodule update --init，如果不做子模块导出的话，
+直接cmake会提示错误，简单来说就是不能下官方的zip源码包，
+而是应该检出tag版本，例如git checkout v1.5.4，
+最好预留两三G的硬盘，然后直接cmake和make即可编译成功
+——可能只是用了一下OpenGL和SDL2的系统库，其他大多数库都是静态链接的
+
+关于linux掌机跑psp自制游戏会闪退的问题，我现在可以在xubuntu 10下
+编译PPSSPP 1.5.4版并且正确运行会在linux掌机上闪退的自制游戏
+（这个移植游戏不是我做的）——事实上我编译默认release版，
+跑这个游戏也会闪退，只不过我找到解决办法，
+就是把CMakeCache.txt的CMAKE_BUILD_TYPE的值改成debug（默认空白），
+然后再编译一次即可，体积会增加一倍，但好处是不会出现闪退的情况。
+当然这只是对于1.5.4版而言，最新版估计也能用类似的方法解决
+```
