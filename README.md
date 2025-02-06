@@ -258,7 +258,7 @@ $ ./PPSSPPSDL
 * https://www.petrockblock.com/forums/topic/guide-to-succefully-compile-ppsspp/  
 * imouto.iso      
 * ppsspp_v1.5.4_min.tar.gz  
-* CMAKE_BUILD_TYPE=debug  
+* CMAKE_BUILD_TYPE:STRING=Debug  
 ```
 ppsspp闪退好像是因为一个函数sceMpegAvcDecode出问题，不过可能升级到最新版就会没事，
 问题是我不会编译这个，等以后有时间再研究  
