@@ -242,8 +242,20 @@ PackedScene.Instantiate（可以强制转换返回值，或者使用泛型类型
 而不需要手工绑定到tscn场景文件
 ```
 
-## Cross compiling PPSSPP 1.5.4  
-* imouto.iso    
+## Cross compiling PPSSPP 1.5.4 debug version to avoid crashing when running imouto.iso homebrew (not by me) softwares or games          
+* don't download zip/tar.gz from github  
+$ git clone https://github.com/hrydgard/ppsspp  
+$ cd ppsspp  
+$ git checkout v1.5.4  
+$ git submodule update --init  
+$ mkdir build  
+$ cd build  
+$ cmake ..  
+(modify CMakeCache.txt CMAKE_BUILD_TYPE=debug)  
+$ cmake ..  
+$ make -j8  
+$ ./PPSSPPSDL  
+* imouto.iso      
 * ppsspp_v1.5.4_min.tar.gz  
 * CMAKE_BUILD_TYPE=debug  
 ```
