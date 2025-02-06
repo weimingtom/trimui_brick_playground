@@ -178,11 +178,16 @@ need back usb-c otg connect a mouse
 ```
 
 ## Cross compiling godot 3.5.1   
-* godot.frt.opt.arm64v8
-* include_trimui.tar.gz
-* pong_v1_3.5.1.tar.gz
-* frt-2.1.0.zip
-* godot-3.5.1-stable.tar.xz
+* unzip frt-2.1.0.zip to godot-3.5.1/platform/frt/.  
+https://github.com/efornara/frt/releases/tag/2.1.0    
+https://github.com/godotengine/godot/releases/tag/3.5.1-stable    
+https://github.com/godotengine/godot-demo-projects/releases/tag/3.5-9e68af3  
+https://github.com/godotengine/godot-demo-projects/releases/download/3.5-9e68af3/2d_pong.zip   
+godot.frt.opt.arm64v8  
+include_trimui.tar.gz  
+pong_v1_3.5.1.tar.gz  
+frt-2.1.0.zip  
+godot-3.5.1-stable.tar.xz  
 * PC version build: (need multi cores CPUs)    
 $ scons p=frt tools=no target=debug -j8    
 (cp bin/godot.frt.debug to pong/)    
