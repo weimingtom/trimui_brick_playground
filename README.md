@@ -183,6 +183,13 @@ need back usb-c otg connect a mouse
 * pong_v1_3.5.1.tar.gz
 * frt-2.1.0.zip
 * godot-3.5.1-stable.tar.xz
+* PC version build: (need multi cores CPUs)    
+$ scons p=frt tools=no target=debug -j8    
+(cp bin/godot.frt.debug to pong/)    
+$ cd ../pong/  
+$ ./godot.frt.debug  
+* Cross compiling:  
+PATH=/home/wmt/work_trimui/aarch64-linux-gnu-7.5.0-linaro/bin:$PATH scons platform=frt frt_arch=arm64v8 frt_cross=auto tools=no target=release verbose=yes CCFLAGS='-I/home/wmt/work_trimui/usr/include -I/home/wmt/work_trimui/usr/include/SDL2' LINKFLAGS='-lSDL2 -L/home/wmt/work_trimui/usr/lib' -j8  
 ```
 1.
 Mod /platform/frt/SCsub:
