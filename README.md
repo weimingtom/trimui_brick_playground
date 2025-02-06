@@ -231,8 +231,9 @@ PackedScene.Instantiate（可以强制转换返回值，或者使用泛型类型
 ```
 
 ## Cross compiling PPSSPP 1.5.4  
-* imouto.iso  
+* imouto.iso    
 * ppsspp_v1.5.4_min.tar.gz  
+* CMAKE_BUILD_TYPE=debug  
 ```
 ppsspp闪退好像是因为一个函数sceMpegAvcDecode出问题，不过可能升级到最新版就会没事，
 问题是我不会编译这个，等以后有时间再研究  
@@ -244,7 +245,7 @@ git submodule update --init，如果不做子模块导出的话，
 最好预留两三G的硬盘，然后直接cmake和make即可编译成功
 ——可能只是用了一下OpenGL和SDL2的系统库，其他大多数库都是静态链接的
 
-关于linux掌机跑psp自制游戏会闪退的问题，我现在可以在xubuntu 10下
+关于linux掌机跑psp自制游戏会闪退的问题，我现在可以在xubuntu 20下
 编译PPSSPP 1.5.4版并且正确运行会在linux掌机上闪退的自制游戏
 （这个移植游戏不是我做的）——事实上我编译默认release版，
 跑这个游戏也会闪退，只不过我找到解决办法，
