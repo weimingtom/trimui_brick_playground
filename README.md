@@ -255,6 +255,7 @@ $ cmake ..
 $ cmake ..  
 $ make -j8  
 $ ./PPSSPPSDL  
+* https://www.petrockblock.com/forums/topic/guide-to-succefully-compile-ppsspp/  
 * imouto.iso      
 * ppsspp_v1.5.4_min.tar.gz  
 * CMAKE_BUILD_TYPE=debug  
