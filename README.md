@@ -251,7 +251,7 @@ $ git submodule update --init
 $ mkdir build  
 $ cd build  
 $ cmake ..  
-(modify CMakeCache.txt CMAKE_BUILD_TYPE=debug)  
+(modify CMakeCache.txt CMAKE_BUILD_TYPE:STRING=Debug)  
 $ cmake ..  
 $ make -j8  
 $ ./PPSSPPSDL  
